@@ -1,0 +1,16 @@
+:root{--gap:8px;--el-w:64px;--el-h:72px;--card-w:320px}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,Segoe UI,Arial;margin:14px;color:#0f1724;background:linear-gradient(180deg,#f7fbff 0%,#ffffff 100%)}
+h1{font-size:1.15rem;margin:0 0 12px}
+.table{display:grid;grid-template-columns:repeat(18,var(--el-w));gap:var(--gap);}
+.el{width:var(--el-w);height:var(--el-h);border-radius:8px;background:#fbfdff;border:1px solid rgba(15,23,36,.06);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:transform .14s ease,box-shadow .14s ease}
+.el:hover{transform:translateY(-6px);box-shadow:0 10px 20px rgba(2,6,23,.08)}
+.num{font-size:.62rem;opacity:.65}
+.sym{font-weight:700;font-size:1.05rem;letter-spacing:.5px}
+.name{font-size:.62rem;opacity:.8}
+.hero{font-size:.72rem;margin-top:6px;color:#0b63a0}
+.spacer{visibility:hidden}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,.38);padding:18px}
+.card{background:#fff;padding:16px;border-radius:12px;min-width:var(--card-w);box-shadow:0 20px 40px rgba(2,6,23,.12)}
+.close{float:right;cursor:pointer;font-size:1.05rem}
+@media (max-width:720px){:root{--el-w:48px;--el-h:60px;--card-w:92vw}.table{gap:6px}}
