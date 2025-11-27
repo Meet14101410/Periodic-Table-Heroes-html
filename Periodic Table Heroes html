@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Periodic Table Heroes</title>
+  <style>
+    :root{--gap:6px;--el-w:64px}
+    body{font-family:system-ui,Segoe UI,Arial;margin:12px;color:#111}
+    h1{font-size:1.2rem;margin:0 0 8px}
+    .table{display:grid;grid-template-columns:repeat(18,var(--el-w));gap:var(--gap);}
+    .el{width:var(--el-w);height:72px;border-radius:6px;background:#f4f7fb;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;border:1px solid #d6dce8}
+    .num{font-size:.65rem;opacity:.7}
+    .sym{font-weight:700;font-size:1.1rem}
+    .name{font-size:.6rem;opacity:.8}
+    .hero{font-size:.75rem;margin-top:6px;color:#0b63a0}
+    .spacer{visibility:hidden}
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.35)}
+    .card{background:#fff;padding:18px;border-radius:10px;min-width:260px;box-shadow:0 8px 30px rgba(11,31,73,.2)}
+    .close{float:right;cursor:pointer}
+    @media (max-width:640px){:root{--el-w:48px} .card{width:90vw}}
+  </style>
+</head>
+<body>
+  <h1>Periodic Table Heroes — click an element to meet its hero</h1>
+  <div class="table" id="table"></div>
+
+  <div class="modal" id="modal"><div class="card" id="card">
+    <div style="display:flex;align-items:center;justify-content:space-between"><strong id="m-sym"></strong><span class="close" id="m-close">✕</span></div>
+    <div style="font-size:.9rem;color:#444" id="m-name"></div>
+    <div style="margin-top:8px;font-size:.85rem" id="m-desc"></div>
+  </div></div>
+
+  <script>
+    // short dataset (first 20 elements) with playful "hero" lines
+    const elements = [
+      {z:1,s:'H',n:'Hydrogen',hero:'Spark — ignites reactions'},
+      {z:2,s:'He',n:'Helium',hero:'Float — light and steady'},
+      {z:3,s:'Li',n:'Lithium',hero:'Charge — battery booster'},
+      {z:4,s:'Be',n:'Beryllium',hero:'Shield — rigid defender'},
+      {z:5,s:'B',n:'Boron',hero:'Glue — links structures'},
+      {z:6,s:'C',n:'Carbon',hero:'Builder — forms life’s backbone'},
+      {z:7,s:'N',n:'Nitrogen',hero:'Blanket — fuels proteins'},
+      {z:8,s:'O',n:'Oxygen',hero:'Breath — energizes reactions'},
+      {z:9,s:'F',n:'Fluorine',hero:'Fang — highly reactive'},
+      {z:10,s:'Ne',n:'Neon',hero:'Glow — lights the night'},
+      {z:11,s:'Na',n:'Sodium',hero:'Wave — electrolyte master'},
+      {z:12,s:'Mg',n:'Magnesium',hero:'Sparkle — fireworks ally'},
+      {z:13,s:'Al',n:'Aluminium',hero:'Lightweight — structural ace'},
+      {z:14,s:'Si',n:'Silicon',hero:'Coder — tech architect'},
+      {z:15,s:'P',n:'Phosphorus',hero:'Flash — glowing sparks'},
+      {z:16,s:'S',n:'Sulfur',hero:'Sting — pungent strategist'},
+      {z:17,s:'Cl',n:'Chlorine',hero:'Purifier — disinfectant force'},
+      {z:18,s:'Ar',n:'Argon',hero:'Silent — inert guardian'},
+      {z:19,s:'K',n:'Potassium',hero:'Pulse — heart & nerve helper'},
+      {z:20,s:'Ca',n:'Calcium',hero:'Frame — bone builder'}
+    ];
+
+    const table = document.getElementById('table');
+    // create 18x3 rows for a compact view (we'll place items by atomic number for demo)
+    const totalSlots = 18 * 7; // plenty; elements will occupy first slots by z
+    for (let i=1;i<=totalSlots;i++){
+      const slot = document.createElement('div');
+      const el = elements.find(e=>e.z===i);
+      if(el){
+        slot.className='el';
+        slot.innerHTML = `<div class="num">${el.z}</div><div class="sym">${el.s}</div><div class="name">${el.n}</div><div class="hero">${el.hero.split(' — ')[0]}</div>`;
+        slot.onclick = ()=>openModal(el);
+      } else {
+        slot.className='el spacer';
+      }
+      table.appendChild(slot);
+    }
+
+    const modal = document.getElementById('modal');
+    function openModal(e){
+      document.getElementById('m-sym').textContent = `${e.s} — ${e.z}`;
+      document.getElementById('m-name').textContent = e.n;
+      document.getElementById('m-desc').textContent = e.hero;
+      modal.style.display='flex';
+    }
+    document.getElementById('m-close').onclick = ()=> modal.style.display='none';
+    modal.onclick = (ev)=>{ if(ev.target===modal) modal.style.display='none' }
+  </script>
+</body>
+</html>
