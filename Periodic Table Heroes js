@@ -1,0 +1,48 @@
+// short dataset (first 20 elements)
+const elements=[
+ {z:1,s:'H',n:'Hydrogen',hero:'Spark — ignites reactions'},
+ {z:2,s:'He',n:'Helium',hero:'Float — light and steady'},
+ {z:3,s:'Li',n:'Lithium',hero:'Charge — battery booster'},
+ {z:4,s:'Be',n:'Beryllium',hero:'Shield — rigid defender'},
+ {z:5,s:'B',n:'Boron',hero:'Glue — links structures'},
+ {z:6,s:'C',n:'Carbon',hero:'Builder — forms life’s backbone'},
+ {z:7,s:'N',n:'Nitrogen',hero:'Blanket — fuels proteins'},
+ {z:8,s:'O',n:'Oxygen',hero:'Breath — energizes reactions'},
+ {z:9,s:'F',n:'Fluorine',hero:'Fang — highly reactive'},
+ {z:10,s:'Ne',n:'Neon',hero:'Glow — lights the night'},
+ {z:11,s:'Na',n:'Sodium',hero:'Wave — electrolyte master'},
+ {z:12,s:'Mg',n:'Magnesium',hero:'Sparkle — fireworks ally'},
+ {z:13,s:'Al',n:'Aluminium',hero:'Lightweight — structural ace'},
+ {z:14,s:'Si',n:'Silicon',hero:'Coder — tech architect'},
+ {z:15,s:'P',n:'Phosphorus',hero:'Flash — glowing sparks'},
+ {z:16,s:'S',n:'Sulfur',hero:'Sting — pungent strategist'},
+ {z:17,s:'Cl',n:'Chlorine',hero:'Purifier — disinfectant force'},
+ {z:18,s:'Ar',n:'Argon',hero:'Silent — inert guardian'},
+ {z:19,s:'K',n:'Potassium',hero:'Pulse — heart & nerve helper'},
+ {z:20,s:'Ca',n:'Calcium',hero:'Frame — bone builder'}
+];
+
+// render table
+const table=document.getElementById('table');
+const totalSlots=18*7; // simple grid
+for(let i=1;i<=totalSlots;i++){
+  const slot=document.createElement('div');
+  const el=elements.find(e=>e.z===i);
+  if(el){
+    slot.className='el';
+    slot.innerHTML=`<div class="num">${el.z}</div><div class="sym">${el.s}</div><div class="name">${el.n}</div><div class="hero">${el.hero.split(' — ')[0]}</div>`;
+    slot.onclick=()=>openModal(el);
+  }else slot.className='el spacer';
+  table.appendChild(slot);
+}
+
+// modal
+const modal=document.getElementById('modal');
+function openModal(e){
+  document.getElementById('m-sym').textContent=`${e.s} — ${e.z}`;
+  document.getElementById('m-name').textContent=e.n;
+  document.getElementById('m-desc').textContent=e.hero;
+  modal.style.display='flex';
+}
+document.getElementById('m-close').onclick=()=>modal.style.display='none';
+modal.onclick=ev=>{if(ev.target===mo
